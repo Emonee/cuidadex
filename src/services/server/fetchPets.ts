@@ -27,7 +27,11 @@ export function fetchPets(animal: 'cat' | 'dog') {
         'x-api-key': API_KEY
       }
     })
-    if (!petResponse.ok) return new Response(JSON.stringify({ error: true, data: null, pagination: { limit, page, nextPage: null } }), { status: petResponse.status, statusText: petResponse.statusText })
+    const headers = {
+      'Content-Type': 'application/json',
+      'X-Top-Secret-Api-Key': 'not_here_eather_muahaha'
+    }
+    if (!petResponse.ok) return new Response(JSON.stringify({ error: true, data: null, pagination: { limit, page, nextPage: null } }), { status: petResponse.status, statusText: petResponse.statusText, headers })
     const data = await petResponse.json()
     const response = {
       pagination: {
@@ -39,9 +43,7 @@ export function fetchPets(animal: 'cat' | 'dog') {
     }
     return new Response(JSON.stringify(response), {
       status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      }
+      headers
     })
   }
 }

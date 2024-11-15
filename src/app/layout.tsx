@@ -2,6 +2,7 @@ import Header from "@/app/components/Header";
 import ReactQueryProvider from "@/app/providers/reactQuery";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import TrollLog from "./components/TrollLog";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <TrollLog />
         <ReactQueryProvider>
           <Header />
           {children}
