@@ -17,7 +17,7 @@ export default function PetCard({ id, name, reference_image_id: referenceImageId
   return (
     <div className="w-56 h-80 rounded-md shadow-lg overflow-hidden relative group">
       <div className="z-[1]">
-        <ImageWithFallback className="w-56 h-56 object-cover" src={`https://cdn2.the${petType}api.com/images/${referenceImageId}.jpg`} fallback={`/${petType}_404.jpg`} alt={name} width={400} height={400} />
+        <ImageWithFallback className="w-56 h-56 object-cover" src={`https://cdn2.the${petType}api.com/images/${referenceImageId}.jpg`} fallback={`/${petType}_404.jpg`} alt={name} width={400} height={400} priority />
         <div className="p-2">
           <h4 className="text-lg mb-2 line-clamp-1">{name}</h4>
           {weight && <p className="text-sm text-black/70">Weight: {weight.metric} kg</p>}
