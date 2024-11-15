@@ -3,11 +3,10 @@
 import { useEffect, useRef } from "react";
 
 type Props = {
-  cb: () => void,
-  children: React.ReactNode
+  cb: () => void
 }
 
-export default function InfiniteScrollObserver({ cb, children }: Props) {
+export default function InfiniteScrollObserver({ cb }: Props) {
   const obs = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,8 +24,6 @@ export default function InfiniteScrollObserver({ cb, children }: Props) {
   }, [cb]);
   
   return (
-    <div ref={obs}>
-      {children}
-    </div>
+    <div ref={obs}></div>
   );
 }
