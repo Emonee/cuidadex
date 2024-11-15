@@ -26,7 +26,7 @@ export default function TabButton({
     <button
       className={`
         ${selected ? "bg-purple-900/50 text-purple-950 font-bold" : "bg-transparent hover:bg-purple-900/25"}
-        w-48 text-center py-2 text-lg
+        w-36 md:w-48 text-center py-2 text-lg
       `}
       onClick={onClick}
     >
