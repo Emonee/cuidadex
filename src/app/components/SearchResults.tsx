@@ -1,6 +1,8 @@
 'use client'
 
 import InfiniteScrollObserver from "@/app/components/InfiniteScrollObserver";
+import { PETS } from "@/conts";
+import { PetTab } from "@/enums";
 import { fetchPets } from "@/services/client/fetchPets";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
@@ -9,11 +11,12 @@ import PetCard from "./PetCard";
 
 export default function SearchResults() {
   const searchParams = useSearchParams();
-  const selectedTab: 'cats' | 'dogs' = (searchParams.get("tab") as 'cats' | 'dogs') || 'cats';
+  const selectedTab: PetTab = (searchParams.get("tab") as PetTab) || PetTab.Cats;
+  const selectedPet = PETS.find(pet => pet.tab === selectedTab) || PETS[0];
   const search = searchParams.get("search") ?? null;
   const { data, isLoading, fetchNextPage, hasNextPage} = useInfiniteQuery({
-    queryKey: [selectedTab, search],
-    queryFn: ({ pageParam }) => fetchPets[selectedTab]({ pageParam, search }),
+    queryKey: [selectedPet.tab, search],
+    queryFn: ({ pageParam }) => fetchPets[selectedPet.tab]({ pageParam, search }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.pagination.nextPage,
     retry: false,
@@ -24,7 +27,7 @@ export default function SearchResults() {
   return (
     <div className="flex flex-wrap gap-10">
       {isLoading && Array.from({ length: 10 }).map((_, i) => <CardLoadingSkeleton key={i} />)}
-      {Boolean(flatedData?.length) && flatedData?.map(cat => <PetCard key={cat.id} {...cat} petType={selectedTab.slice(0, -1)} />)}
+      {Boolean(flatedData?.length) && flatedData?.map(pet => <PetCard key={pet.id} {...pet} petType={selectedPet.animal} />)}
       {data && hasNextPage && (
         <>
           <InfiniteScrollObserver cb={fetchNextPage} />

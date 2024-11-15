@@ -1,25 +1,26 @@
 'use client'
 
+import { PETS } from "@/conts";
+import { Pet } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default function TabButton({
-  children,
-  tab,
-}: Readonly<{
+type Props = {
+  pet: Pet
   children: React.ReactNode
-  tab: string
-}>) {
+}
+
+export default function TabButton({ children, pet }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams();
 
   const selectedTab = searchParams.get("tab");
-  const selected = selectedTab ? selectedTab === tab : tab === "cats";
+  const selected = selectedTab ? selectedTab === pet.tab : pet.tab === PETS[0].tab;
 
   const onClick = () => {
     if (selected) return;
     const params = new URLSearchParams(searchParams.toString());
-    params.set("tab", tab);
+    params.set("tab", pet.tab);
     router.push(`${pathname}?${params.toString()}`);
   };
   return (

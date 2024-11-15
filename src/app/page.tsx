@@ -1,7 +1,7 @@
 import SearchResults from "@/app/components/SearchResults";
-import SuspensiveInput from "@/app/components/SuspensiveInput";
 import Tabs from "@/app/components/Tabs";
 import { Suspense } from "react";
+import SetSearchInput from "./components/SetSearchInput";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       <p className="mb-7">Search and find the cats and dogs you love.</p>
       <Suspense fallback={<div>Loading...</div>}>
         <Tabs />
-        <SuspensiveInput />
+        <SetSearchInput />
         <SearchResults />
       </Suspense>
     </main>

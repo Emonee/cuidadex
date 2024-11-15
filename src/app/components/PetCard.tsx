@@ -1,4 +1,5 @@
 import ImageWithFallback from "@/app/components/ImageWithFallback";
+import { PetType } from "@/enums";
 import Link from "next/link";
 
 type Props = {
@@ -6,14 +7,14 @@ type Props = {
   name: string;
   description?: string;
   reference_image_id: number;
-  petType?: 'cat' | 'dog';
+  petType?: PetType;
   weight?: { metric: string };
   height?: { metric: string };
   origin?: string;
   temperament?: string;
 };
 
-export default function PetCard({ id, name, reference_image_id: referenceImageId, petType = 'cat', weight, height, origin, temperament }: Props) {
+export default function PetCard({ id, name, reference_image_id: referenceImageId, petType = PetType.Cat, weight, height, origin, temperament }: Props) {
   return (
     <div className="w-56 h-80 rounded-md shadow-lg overflow-hidden relative group">
       <div className="z-[1]">
