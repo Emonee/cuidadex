@@ -21,12 +21,10 @@ export default function SearchResults() {
   const flatedData = data?.pages.flatMap(pages => pages.data);
   
   return (
-    <div>
-      <h1>SearchResults</h1>
+    <div className="flex flex-wrap gap-10">
       {isLoading && <div>Loading...</div>}
       {Boolean(flatedData?.length) && flatedData?.map(cat => <PetCard key={cat.id} {...cat} petType={selectedTab.slice(0, -1)} />)}
       {data && hasNextPage && <InfiniteScrollObserver cb={fetchNextPage} />}
     </div>
   );
 }
-
