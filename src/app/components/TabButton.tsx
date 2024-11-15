@@ -24,9 +24,10 @@ export default function TabButton({
   };
   return (
     <button
-      className={`${
-        selected ? "bg-rose-500" : "bg-transparent"
-      } font-bold py-2 px-4 rounded-md`}
+      className={`
+        ${selected ? "bg-purple-900/50 text-purple-950 font-bold" : "bg-transparent hover:bg-purple-900/25"}
+        w-48 text-center py-2 text-lg
+      `}
       onClick={onClick}
     >
       {children}
