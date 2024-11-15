@@ -23,7 +23,7 @@ export default function SearchResults() {
   
   return (
     <div className="flex flex-wrap gap-10">
-      {isLoading && <div>Loading...</div>}
+      {isLoading && Array.from({ length: 10 }).map((_, i) => <CardLoadingSkeleton key={i} />)}
       {Boolean(flatedData?.length) && flatedData?.map(cat => <PetCard key={cat.id} {...cat} petType={selectedTab.slice(0, -1)} />)}
       {data && hasNextPage && (
         Array.from({ length: 10 }).map((_, i) => <InfiniteScrollObserver key={i} cb={fetchNextPage}><CardLoadingSkeleton /></InfiniteScrollObserver>)
