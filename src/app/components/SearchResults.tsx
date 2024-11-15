@@ -4,6 +4,7 @@ import InfiniteScrollObserver from "@/app/components/InfiniteScrollObserver";
 import { fetchPets } from "@/services/client/fetchPets";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
+import CardLoadingSkeleton from "./CardLoadingSkeleton";
 import PetCard from "./PetCard";
 
 export default function SearchResults() {
@@ -24,7 +25,9 @@ export default function SearchResults() {
     <div className="flex flex-wrap gap-10">
       {isLoading && <div>Loading...</div>}
       {Boolean(flatedData?.length) && flatedData?.map(cat => <PetCard key={cat.id} {...cat} petType={selectedTab.slice(0, -1)} />)}
-      {data && hasNextPage && <InfiniteScrollObserver cb={fetchNextPage} />}
+      {data && hasNextPage && (
+        Array.from({ length: 10 }).map((_, i) => <InfiniteScrollObserver key={i} cb={fetchNextPage}><CardLoadingSkeleton /></InfiniteScrollObserver>)
+      )}
     </div>
   );
 }
