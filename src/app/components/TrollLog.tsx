@@ -1,6 +1,10 @@
 'use client'
 
+import { useEffect } from "react";
+
 export default function TrollLog() {
-  console.log('😱 No API KEYS HERE! 😱');
+  useEffect(() => {
+    console.log('😱 No API KEYS HERE! 😱');
+  }, [])
   return <></>;
 }
