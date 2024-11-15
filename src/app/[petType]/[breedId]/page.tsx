@@ -13,7 +13,6 @@ type Props = {
 export default async function Page({ params }: Props) {
   const { breedId, petType } = await params
   const { data } = await fetchBreed(petType, breedId)
-  console.log(data);
   return (
     <main>
       <ImageWithFallback className="w-full h-full object-cover" src={`https://cdn2.the${petType.slice(0, -1)}api.com/images/${data.reference_image_id}.jpg`} fallback={`/${petType.slice(0, -1)}_404.jpg`} alt={data.name} width={400} height={400} priority />
