@@ -29,7 +29,7 @@ export default function PetCard({ id, name, reference_image_id: referenceImageId
         <p className="text-white/85 mb-4">{origin || 'Not available yet 😿'}</p>
         <p className="text-sm mb-1 text-white/75">Temperament:</p>
         <p className="text-white/85">{temperament || 'Not available yet 😿'}.</p>
-        <Link href={`/${petType}s/${id}`} className="text-white py-2 text-center bg-purple-500 rounded-md block mt-auto hover:bg-purple-800">Details</Link>
+        <Link href={`/${petType}s/${id}`} className="text-white py-2 text-center bg-purple-500 rounded-md block mt-auto hover:bg-purple-800" prefetch={false}>Details</Link>
       </div>
     </div>
   );
