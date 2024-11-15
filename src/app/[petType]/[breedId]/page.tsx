@@ -1,4 +1,6 @@
 import ImageWithFallback from "@/app/components/ImageWithFallback"
+import PetAttributte from "@/app/components/PetAttributte"
+import PetCharacteristics from "@/app/components/PetCharacteristics"
 import { fetchBreed } from "@/services/server/fetchPets"
 
 type Params = {
@@ -14,14 +16,21 @@ export default async function Page({ params }: Props) {
   const { breedId, petType } = await params
   const { data } = await fetchBreed(petType, breedId)
   return (
-    <main>
-      <ImageWithFallback className="w-full h-full object-cover" src={`https://cdn2.the${petType.slice(0, -1)}api.com/images/${data.reference_image_id}.jpg`} fallback={`/${petType.slice(0, -1)}_404.jpg`} alt={data.name} width={400} height={400} priority />
-      <h1>{data.name}</h1>
-      <p>Origin: {data.origin ?? 'Not Available'}</p>
-      <p>Life span: {data.life_span ?? 'Not Available'}</p>
-      {data.height && <p>Height: {data.height?.metric ? `${data.height.metric} cm` : 'Not Available'}</p>}
-      <p>Weight: {data.weight?.metric ? `${data.weight.metric} kg` : 'Not Available'}</p>
-      <p>{data.description ?? 'Description not available'}</p>
+    <main className="px-5 py-20 flex justify-center flex-wrap gap-20">
+      <ImageWithFallback className="w-[500px] max-w-full aspect-square object-cover rounded-md shadow-md" src={`https://cdn2.the${petType.slice(0, -1)}api.com/images/${data.reference_image_id}.jpg`} fallback={`/${petType.slice(0, -1)}_404.jpg`} alt={data.name} width={400} height={400} priority />
+      <div className="max-w-[500px]">
+        <section className="mb-5">
+          <h2 className="font-bold text-3xl">{data.name}</h2>
+          {data.origin && <p className="text-sm text-gray-500">{data.origin}.</p>}
+        </section>
+        {data.temperament && <PetAttributte title="Temperament" body={`${data.temperament}.`} />}
+        {data.weight && <PetAttributte title="Weight" body={`${data.weight.metric} kg.`} />}
+        {data.height && <PetAttributte title="Height" body={`${data.height.metric} cm.`} />}
+        {data.life_span && <PetAttributte title="Life span" body={`${data.life_span}.`} />}
+        <PetCharacteristics data={data} />
+        {data.description && <p className="text-gray-600">{data.description}</p>}
+      </div>
+      {data.wikipedia_url && <p className="text-blue-500 hover:text-blue-700"><a href={data.wikipedia_url} target="_blank">Learn more</a></p>}
     </main>
   )
 }
