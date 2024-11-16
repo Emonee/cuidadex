@@ -16,7 +16,7 @@ export default function SearchResults() {
   const search = searchParams.get("search") ?? null;
   const { data, isLoading, fetchNextPage, hasNextPage} = useInfiniteQuery({
     queryKey: [selectedPet.tab, search],
-    queryFn: ({ pageParam }) => fetchPets[selectedPet.tab]({ pageParam, search }),
+    queryFn: ({ pageParam }) => fetchPets({ pageParam, search, petType: selectedPet.tab }),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.pagination.nextPage,
     retry: false,

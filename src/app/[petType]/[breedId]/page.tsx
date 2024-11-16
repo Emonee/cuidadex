@@ -1,10 +1,11 @@
 import ImageWithFallback from "@/app/components/ImageWithFallback"
 import PetAttributte from "@/app/components/PetAttributte"
 import PetCharacteristics from "@/app/components/PetCharacteristics"
+import { PetTab } from "@/enums"
 import { fetchBreed } from "@/services/server/fetchPets"
 
 type Params = {
-  petType: 'cats' | 'dogs'
+  petType: PetTab
   breedId: string
 }
 

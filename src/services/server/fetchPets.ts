@@ -1,18 +1,15 @@
+import { PETS } from '@/conts'
+import { PetTab, PetType } from '@/enums'
 import { type NextRequest } from 'next/server'
+import { jsonResponse } from './jsonResponse'
 
 const API_KEY = process.env.CAT_API_KEY ?? ''
-const CAT_URI = 'https://api.thecatapi.com/v1/breeds'
-const DOG_URI = 'https://api.thedogapi.com/v1/breeds'
-const URIS = {
-  cat: CAT_URI,
-  dog: DOG_URI,
-  cats: CAT_URI,
-  dogs: DOG_URI
-}
 
-export function fetchPets(animal: 'cat' | 'dog') {
-  const uri = URIS[animal]
+export function fetchPets(animal: PetType) {
+  const pet = PETS.find(pet => pet.animal === animal)
   return async function (request: NextRequest) {
+    if (!pet) return jsonResponse({ error: true, data: null }, { status: 404, statusText: 'Not Found' })
+    const uri = pet.apiUri
     const searchParams = request.nextUrl.searchParams
     const limit = Number(searchParams.get('limit')) || 20
     const page = Number(searchParams.get('page'))
@@ -31,7 +28,7 @@ export function fetchPets(animal: 'cat' | 'dog') {
       'Content-Type': 'application/json',
       'X-Top-Secret-Api-Key': 'not_here_eather_muahaha'
     }
-    if (!petResponse.ok) return new Response(JSON.stringify({ error: true, data: null, pagination: { limit, page, nextPage: null } }), { status: petResponse.status, statusText: petResponse.statusText, headers })
+    if (!petResponse.ok) return jsonResponse({ error: true, data: null, pagination: { limit, page, nextPage: null } }, { status: petResponse.status, statusText: petResponse.statusText, headers })
     const data = await petResponse.json()
     const response = {
       pagination: {
@@ -41,21 +38,22 @@ export function fetchPets(animal: 'cat' | 'dog') {
       },
       data
     }
-    return new Response(JSON.stringify(response), {
+    return jsonResponse(response, {
       status: 200,
       headers
     })
   }
 }
 
-export async function fetchBreed(animal: keyof typeof URIS, id: string) {
-  const uri = URIS[animal]
-  const petResponse = await fetch(`${uri}/${id}`, {
+export async function fetchBreed(animal: PetTab, id: string) {
+  const pet = PETS.find(pet => pet.tab === animal)
+  if (!pet) throw new Error('Pet type not found')
+  const petResponse = await fetch(`${pet.apiUri}/${id}`, {
     headers: {
       'x-api-key': API_KEY
     }
   })
-  if (!petResponse.ok) throw new Error('Error fetching breed')
+  if (!petResponse.ok) throw new Error(`Error fetching breed: ${petResponse.status} ${petResponse.statusText}`)
   const data = await petResponse.json()
   return {
     data
