@@ -14,9 +14,9 @@ const nextConfig: NextConfig = {
         hostname: "cdn2.thedogapi.com",
         port: "",
         pathname: "/images/**",
-      }
+      },
     ],
-  }
+  },
 };
 
 export default nextConfig;

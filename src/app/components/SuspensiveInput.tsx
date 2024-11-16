@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
 import { useRef, type InputHTMLAttributes } from "react";
 
-type Props = InputHTMLAttributes<HTMLInputElement>
+type Props = InputHTMLAttributes<HTMLInputElement>;
 
 export default function SuspensiveInput(props: Props) {
   const timeOutRef = useRef<NodeJS.Timeout | null>(null);
@@ -13,10 +13,5 @@ export default function SuspensiveInput(props: Props) {
     timeOutRef.current = setTimeout(() => props.onChange?.(e), 850);
   };
 
-  return (
-    <input
-      {...props}
-      onChange={onChange}
-    />
-  );
+  return <input {...props} onChange={onChange} />;
 }

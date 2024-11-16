@@ -1,6 +1,6 @@
 type Props = {
-  title: string
-  body: string
+  title: string;
+  body: string;
 };
 
 export default function PetAttributte({ title, body }: Props) {

@@ -1,21 +1,23 @@
-'use client'
+"use client";
 
 import { PETS } from "@/conts";
 import { Pet } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type Props = {
-  pet: Pet
-  children: React.ReactNode
-}
+  pet: Pet;
+  children: React.ReactNode;
+};
 
 export default function TabButton({ children, pet }: Props) {
-  const router = useRouter()
-  const pathname = usePathname()
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const selectedTab = searchParams.get("tab");
-  const selected = selectedTab ? selectedTab === pet.tab : pet.tab === PETS[0].tab;
+  const selected = selectedTab
+    ? selectedTab === pet.tab
+    : pet.tab === PETS[0].tab;
 
   const onClick = () => {
     if (selected) return;

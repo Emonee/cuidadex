@@ -1,9 +1,9 @@
 export enum PetTab {
-  Cats = 'cats',
-  Dogs = 'dogs'
+  Cats = "cats",
+  Dogs = "dogs",
 }
 
 export enum PetType {
-  Cat = 'cat',
-  Dog = 'dog'
+  Cat = "cat",
+  Dog = "dog",
 }
